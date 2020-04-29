@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:My_Budget_Tracker"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="My Budget Tracker" Height="720" Width="960">
     <Grid>
-        <TextBlock Text="Hello, Windows 10"
-                   FontFamily="segoe UI"
-                   FontSize="64"
-                   Foreground="SkyBlue"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="127*"/>
+        </Grid.ColumnDefinitions>
+        <DataGrid x:Name="dataGrid" Grid.Column="1" HorizontalAlignment="Left" Height="539" Margin="50,68,0,0" VerticalAlignment="Top" Width="627"
+                  AutoGenerateColumns="True"/>
     </Grid>
 </Window>

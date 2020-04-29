@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +22,41 @@ namespace My_Budget_Tracker
     /// </summary>
     public partial class MainWindow : Window
     {
+        private DataTable dataTable = null;
         public MainWindow()
         {
             InitializeComponent();
+            try
+            {
+                lock (DBHelper.DBConn)
+                {
+                    if (!DBHelper.IsDBConnected)
+                    {
+                        MessageBox.Show("DB 연결을 확인하세요.");
+                        return;
+                    }
+                    else
+                    {
+                        // DB Connection Established
+                        MySqlDataAdapter adapter = new MySqlDataAdapter("SELECT * FROM budget_form", DBHelper.DBConn);
+                        dataTable = new DataTable();
+                        try
+                        {
+                            adapter.Fill(dataTable);
+                            dataGrid.ItemsSource = dataTable.DefaultView;
+                        }
+                        catch (Exception e)
+                        {
+                            MessageBox.Show(e.Message, "DataGrid_Load Error");
+                        }
+                        DBHelper.Close();
+                    }
+                }
+            }
+            catch (ArgumentNullException ane)
+            {
+                MessageBox.Show(ane.Message, "DataGrid_Load Error");
+            }
         }
     }
 }

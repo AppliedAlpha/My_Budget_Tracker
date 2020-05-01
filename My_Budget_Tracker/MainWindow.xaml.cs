@@ -17,9 +17,6 @@ using System.Windows.Shapes;
 
 namespace My_Budget_Tracker
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private DataTable dataTable = null;

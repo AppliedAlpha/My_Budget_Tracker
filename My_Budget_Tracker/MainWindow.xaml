@@ -5,13 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:My_Budget_Tracker"
         mc:Ignorable="d"
-        Title="My Budget Tracker" Height="720" Width="960">
+        Title="My Budget Tracker" Height="480" Width="720">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="127*"/>
         </Grid.ColumnDefinitions>
-        <DataGrid x:Name="dataGrid" Grid.Column="1" HorizontalAlignment="Left" Height="539" Margin="50,68,0,0" VerticalAlignment="Top" Width="627"
-                  AutoGenerateColumns="True"/>
+        <DataGrid x:Name="dataGrid" HorizontalAlignment="Center" Height="339" Margin="0,100,0,0" VerticalAlignment="Center" Width="712"
+                  AutoGenerateColumns="True" Grid.ColumnSpan="6" />
+        <RadioButton x:Name="_in" Content="수입" Grid.Column="1" HorizontalAlignment="Left" Margin="60,72,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="_out" Content="지출" Grid.Column="1" HorizontalAlignment="Left" Margin="130,72,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="price" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="341.8,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="249" TextAlignment="Right" FontSize="14" SpellCheck.IsEnabled="True" Text="0"/>
+        <TextBlock x:Name="label_price" Grid.Column="1" HorizontalAlignment="Left" Margin="270.8,45,0,0" TextWrapping="Wrap" Text="금액" VerticalAlignment="Top" TextAlignment="Right" Width="52"/>
+        <TextBlock x:Name="title" HorizontalAlignment="Left" Margin="27,20,0,0" TextWrapping="Wrap" Text="My Budget Tracker" VerticalAlignment="Top" FontSize="30" Grid.ColumnSpan="2"/>
+        <TextBlock x:Name="label_detail" Grid.Column="1" HorizontalAlignment="Left" Margin="277.8,74,0,0" TextWrapping="Wrap" Text="상세내역" VerticalAlignment="Top" TextAlignment="Right" Width="45"/>
+        <Button x:Name="add" Content="추가" Grid.Column="1" HorizontalAlignment="Left" Margin="601.8,41,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="delete" Content="삭제" Grid.Column="1" HorizontalAlignment="Left" Margin="601.8,72,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBox x:Name="pwd" Grid.Column="1" HorizontalAlignment="Left" Height="20" Margin="490.8,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
+        <Button x:Name="login" Content="로그인" Grid.Column="1" HorizontalAlignment="Left" Margin="601.8,10,0,0" VerticalAlignment="Top" Width="75"/>
+        <ComboBox x:Name="type_detail" Grid.Column="1" HorizontalAlignment="Left" Margin="341.8,72,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBlock x:Name="type" Grid.Column="1" HorizontalAlignment="Left" Margin="10,72,0,0" TextWrapping="Wrap" Text="구분" VerticalAlignment="Top"/>
+        <TextBox x:Name="description" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="470.8,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" FontSize="10"/>
+        <TextBlock x:Name="label_pwd" Grid.Column="1" HorizontalAlignment="Left" Margin="427.8,11,0,0" TextWrapping="Wrap" Text="비밀번호" VerticalAlignment="Top" TextAlignment="Right" Width="52"/>
     </Grid>
 </Window>

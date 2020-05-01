@@ -25,18 +25,18 @@ namespace My_Budget_Tracker
         {
             get
             {
-                if (!ConnectToDB()) return null;
+                if (!bDBConnCheck) return null;
                 return conn;
             }
         }
 
         // DB Connection
-        public static bool ConnectToDB()
+        public static bool ConnectToDB(String pwd)
         {
             if (conn == null)
             {
                 // args: Server Name, DB Name, Auth
-                DBConnString = String.Format("server={0};uid={1};pwd={2};database={3};charset=utf8 ;", "localhost", "aria", "020823", "budget_tracker");
+                DBConnString = String.Format("server={0};uid={1};pwd={2};database={3};charset=utf8 ;", "localhost", "aria", pwd, "budget_tracker");
                 conn = new MySqlConnection(DBConnString);
             }
             try
@@ -45,7 +45,11 @@ namespace My_Budget_Tracker
                 {
                     conn.Open();
                     if (conn.State == System.Data.ConnectionState.Open) bDBConnCheck = true;
-                    else bDBConnCheck = false;
+                    else
+                    {
+                        conn = null;
+                        bDBConnCheck = false;
+                    }
                 }
             }
             catch (MySqlException mse)

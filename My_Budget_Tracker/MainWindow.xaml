@@ -22,7 +22,7 @@
         <Button x:Name="add" Content="추가" Grid.Column="1" HorizontalAlignment="Left" Margin="601.8,41,0,0" VerticalAlignment="Top" Width="75"/>
         <Button x:Name="delete" Content="삭제" Grid.Column="1" HorizontalAlignment="Left" Margin="601.8,72,0,0" VerticalAlignment="Top" Width="75"/>
         <TextBox x:Name="pwd" Grid.Column="1" HorizontalAlignment="Left" Height="20" Margin="490.8,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
-        <Button x:Name="login" Content="로그인" Grid.Column="1" HorizontalAlignment="Left" Margin="601.8,10,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="login" Content="로그인" Grid.Column="1" HorizontalAlignment="Left" Margin="601.8,10,0,0" VerticalAlignment="Top" Width="75" Background="#FFA5FA8F"/>
         <ComboBox x:Name="type_detail" Grid.Column="1" HorizontalAlignment="Left" Margin="341.8,72,0,0" VerticalAlignment="Top" Width="120"/>
         <TextBlock x:Name="type" Grid.Column="1" HorizontalAlignment="Left" Margin="10,72,0,0" TextWrapping="Wrap" Text="구분" VerticalAlignment="Top"/>
         <TextBox x:Name="description" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="470.8,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" FontSize="10"/>

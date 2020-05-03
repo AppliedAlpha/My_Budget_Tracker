@@ -8,6 +8,7 @@ using System.Windows;
 
 namespace My_Budget_Tracker
 {
+    // Well, Now you are useless.
     public class DBHelper
     {
         // Connection Object

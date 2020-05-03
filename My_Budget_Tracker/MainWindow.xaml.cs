@@ -21,6 +21,7 @@ namespace My_Budget_Tracker
     public partial class MainWindow : Window
     {
         private DataTable dataTable = new DataTable();
+        private DataTable dataTable_tmp;
         private static MySqlConnection conn = null;
         public static String DBConnString;
         public static bool bDBConnCheck = false;
@@ -43,14 +44,23 @@ namespace My_Budget_Tracker
             {
                 if (conn.State == System.Data.ConnectionState.Open)
                 {
-                    int total = 0;
-                    MySqlDataAdapter adapter = new MySqlDataAdapter("INSERT INTO `budget_tracker`.`budget_form` " +
-                        "(`record_date`, `price`, `description`, `usage`, `total`) VALUES " +
-                        "('" + DateTime.Today.ToString("d") + "', '" + price.Text + "', '" + description.Text + "', '" +
-                        type_detail.Text + "', '" + total + "');", conn);
                     try
                     {
-                        adapter.Fill(dataTable);
+                        dataTable_tmp = new DataTable();
+                        MySqlDataAdapter adapter = new MySqlDataAdapter("SELECT total FROM budget_form ORDER BY id DESC LIMIT 1", conn);
+                        adapter.Fill(dataTable_tmp);
+
+                        int total = (int) dataTable_tmp.Rows[0]["total"];
+                        int diff = Convert.ToInt32(price.Text) * (_out.IsChecked.Value ? -1 : 1);
+
+                        MySqlDataAdapter adapter2 = new MySqlDataAdapter("INSERT INTO `budget_tracker`.`budget_form` " +
+                            "(`record_date`, `price`, `description`, `usage`, `total`) VALUES " +
+                            "('" + DateTime.Today.ToString("d") + "', '" + diff + "', '" + description.Text + "', '" +
+                            type_detail.Text + "', '" + (total + diff ) + "');", conn);
+                        MySqlDataAdapter adapter3 = new MySqlDataAdapter("SELECT * FROM budget_form ORDER BY id DESC LIMIT 1000", conn);
+                        adapter2.Fill(dataTable);
+                        dataTable.Clear();
+                        adapter3.Fill(dataTable);
                         dataGrid.ItemsSource = dataTable.DefaultView;
                     }
                     catch (Exception ex)
@@ -67,7 +77,37 @@ namespace My_Budget_Tracker
 
         private void _delete(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (conn.State == System.Data.ConnectionState.Open)
+                {
+                    try
+                    {
+                        dataTable_tmp = new DataTable();
+                        MySqlDataAdapter adapter = new MySqlDataAdapter("SELECT id FROM budget_form ORDER BY id DESC LIMIT 1", conn);
+                        adapter.Fill(dataTable_tmp);
+
+                        int id = (int)dataTable_tmp.Rows[0]["id"];
+                        MySqlDataAdapter adapter2 = new MySqlDataAdapter("DELETE FROM budget_form WHERE id = " + id, conn);
+                        MySqlDataAdapter adapter3 = new MySqlDataAdapter("ALTER TABLE budget_form AUTO_INCREMENT = " + id, conn);
+                        MySqlDataAdapter adapter4 = new MySqlDataAdapter("SELECT * FROM budget_form ORDER BY id DESC LIMIT 1000", conn);
+                        adapter2.Fill(dataTable);
+                        dataTable.Clear();
+                        adapter3.Fill(dataTable);
+                        adapter4.Fill(dataTable);
+                        dataGrid.ItemsSource = dataTable.DefaultView;
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void inoutClick(object sender, RoutedEventArgs e)
@@ -113,6 +153,7 @@ namespace My_Budget_Tracker
                     adapter.Fill(dataTable);
                     dataGrid.ItemsSource = dataTable.DefaultView;
                     pwd.Text = "";
+                    login.Background = new SolidColorBrush(Color.FromArgb(255, 165, 245, 255));
                     MessageBox.Show("정상적으로 로그인되었습니다.", "MySQL Connection");
                 }
                 catch (Exception ex)
@@ -124,6 +165,7 @@ namespace My_Budget_Tracker
             catch (MySqlException mse)
             {
                 MessageBox.Show(mse.Message, "DB Connection을 확인해주세요.");
+                conn = null;
             }
             catch (Exception ex)
             {
